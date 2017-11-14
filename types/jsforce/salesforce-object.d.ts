@@ -14,6 +14,7 @@ export class SObject<T> {
     retrieve(ids: SalesforceId[], options?: Object, callback?: (err: Error, ret: Array<Record<T>>) => void): Promise<Array<Record<T>>>;
     update(record: Partial<T>, options?: Object, callback?: (err: Error, ret: RecordResult) => void): Promise<RecordResult>;
     update(records: Array<Partial<T>>, options?: Object, callback?: (err: Error, ret: RecordResult[]) => void): Promise<RecordResult[]>;
+    updated(start: Date | string, end: Date | string, callback?: (info: UpdatedRecordsInfo) => void): Promise<UpdatedRecordsInfo>;
     upsert(records: Record<T>, extIdField: SalesforceId, options?: Object, callback?: (err: Error, ret: RecordResult) => void): Promise<RecordResult>;
     upsert(records: Array<Record<T>>, extIdField: SalesforceId, options?: Object, callback?: (err: Error, ret: RecordResult[]) => void): Promise<RecordResult[]>;
     upsertBulk(input?: Array<Record<T>> | stream.Stream | string, callback?: (err: Error, ret: RecordResult[] | BatchResultInfo[]) => void): Batch;
@@ -77,6 +78,11 @@ export interface DeletedRecordsInfo {
         id: string,
         deletedDate: string,
     };
+}
+
+export interface UpdatedRecordsInfo {
+    latestDateCovered: string;
+    ids: string[];
 }
 
 export interface LayoutInfo {
